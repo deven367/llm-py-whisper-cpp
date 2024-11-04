@@ -1,0 +1,6 @@
+[project]
+name = "llm-py-whisper-cpp"
+version = "0.1"
+
+[project.entry-points.llm]
+pywhisper = "llm_pywhisper"
