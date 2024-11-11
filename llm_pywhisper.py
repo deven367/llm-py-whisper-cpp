@@ -26,8 +26,23 @@ AVAILABLE_MODELS = [
 
 
 @llm.hookimpl
-def register_models(register):
-    register(PyWhisper())
+def register_commands(cli):
+    @cli.command()
+    @click.argument("audio_file", type=str)
+    @click.option(
+        "--model",
+        type=click.Choice(AVAILABLE_MODELS),
+        default="base",
+        help="Whisper model to use",
+    )
+    def pywhisper(audio_file, model:str):
+        model = Model(model, n_threads=6)
+        segments = model.transcribe(audio_file, language='auto', single_segment=True, print_timestamps=True, print_realtime=True)
+        for segment in segments:
+            click.echo(segment.text)
+
+
+    # register(PyWhisper())
 
 class PyWhisper(llm.Model):
     model_id = "pywhisper"
