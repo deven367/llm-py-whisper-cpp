@@ -1,4 +1,7 @@
+import click
 import llm
+from pywhispercpp.model import Model
+
 AVAILABLE_MODELS = [
     "base",
     "base-q5_1",
